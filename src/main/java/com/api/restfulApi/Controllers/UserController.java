@@ -45,5 +45,4 @@ public class UserController {
         return userBusiness.deleteUser(id);
     }
 
-
 }
