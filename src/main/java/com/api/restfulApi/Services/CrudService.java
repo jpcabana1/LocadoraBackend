@@ -6,7 +6,7 @@ import com.api.restfulApi.Models.DTOS.UserDTO;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserService {
+public interface CrudService {
 
     Optional<UserDAO> create(UserDTO userDTO);
     Optional<UserDAO> read(Long id);

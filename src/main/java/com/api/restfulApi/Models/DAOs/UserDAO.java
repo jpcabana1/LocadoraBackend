@@ -1,5 +1,6 @@
 package com.api.restfulApi.Models.DAOs;
 
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -26,11 +27,10 @@ public class UserDAO {
     private String pass;
 
     public UserDAO(Long id, String name, String username, String pass) {
-        Long hash = Math.abs((name.hashCode() * username.hashCode()) + (pass.charAt(0) + 1l));
         this.id = id;
         this.name = name;
         this.username = username;
-        this.pass = hash.toString();
+        this.pass = EncriptyPassword(name, username, pass);
     }
 
     public Long getId() {
@@ -62,8 +62,13 @@ public class UserDAO {
     }
 
     public void setPass(String pass) {
-        Long hash = Math.abs((name.hashCode() * username.hashCode()) + (pass.charAt(0) + 1l));
-        this.pass = hash.toString();
+       this.pass = pass;
     }
+
+    public static String EncriptyPassword(String name, String username,String pass){
+        Long hash = Math.abs((name.hashCode() * username.hashCode()) + (pass.charAt(0) + 1l));
+        return hash.toString();
+    }
+
 
 }
