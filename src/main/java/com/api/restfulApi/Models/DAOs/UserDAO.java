@@ -1,6 +1,5 @@
 package com.api.restfulApi.Models.DAOs;
 
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.Table;
