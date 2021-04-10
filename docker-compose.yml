@@ -13,7 +13,6 @@ services:
       - SPRING_DATASOURCE_USERNAME=user_application
       - SPRING_DATASOURCE_PASSWORD=application
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      - SPRING_JPA_PROPERTIES_HIBERNATE_DEFAULT_SCHEMA=locadora
     ports:
       - "8080:8080"
   db:
