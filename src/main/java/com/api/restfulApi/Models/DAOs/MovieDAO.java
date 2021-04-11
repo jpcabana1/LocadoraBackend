@@ -1,6 +1,5 @@
 package com.api.restfulApi.Models.DAOs;
 
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,7 +17,7 @@ import javax.persistence.Column;
 //@Getter
 //@Setter
 public class MovieDAO {
-    //    @Id
+//    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Long id;
 //

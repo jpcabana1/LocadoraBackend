@@ -1,9 +1,9 @@
 package com.api.restfulApi.Models.DAOs;
 
-
 import com.api.restfulApi.Models.DTOS.UserDTO;
 import lombok.Getter;
 import lombok.Setter;
+
 
 import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
@@ -18,7 +18,6 @@ import javax.persistence.Column;
 @NoArgsConstructor
 @Getter
 @Setter
-
 public class UserDAO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
