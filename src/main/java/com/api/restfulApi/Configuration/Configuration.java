@@ -1,6 +1,7 @@
 package com.api.restfulApi.Configuration;
 
 
+import com.api.restfulApi.Models.DTOS.Message;
 import com.api.restfulApi.Repository.NativeQueryRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -28,4 +29,6 @@ public class Configuration {
         return new NativeQueryRepository();
     }
 
+    @Bean
+    public Message message(){return new Message();}
 }

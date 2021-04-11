@@ -26,14 +26,15 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<?> findAll() {
-        return userBusiness.readAllUsers();
-    }
+    public ResponseEntity<?> findAll() { return userBusiness.readAllUsers(); }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable(value = "id") Long id) {
         return userBusiness.readUser(id);
     }
+
+    @GetMapping("/validate")
+    public ResponseEntity<?> validateLogin(@RequestBody UserDTO userDTO) { return userBusiness.validateLogin(userDTO); }
 
     @PutMapping()
     public ResponseEntity<?> updateUser(@RequestBody UserDTO userDTO) {
@@ -44,6 +45,5 @@ public class UserController {
     public ResponseEntity<?> deleteById(@PathVariable(value = "id") Long id) {
         return userBusiness.deleteUser(id);
     }
-
 
 }

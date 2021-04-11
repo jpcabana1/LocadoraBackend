@@ -11,7 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service()
 public class CrudServiceUser implements CrudService {
 
     @Autowired
@@ -19,39 +19,47 @@ public class CrudServiceUser implements CrudService {
 
     @Override
     public Optional<UserDAO> create(UserDTO userDTO) {
-        try{
+        try {
             UserDAO userDAO = new UserDAO(userDTO.getId(), userDTO.getName(), userDTO.getUser(), userDTO.getPass());
             UserDAO response = repository.save(userDAO);
             return Optional.of(response);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
     }
 
     @Override
     public Optional<UserDAO> read(Long id) {
-        try{
+        try {
             return repository.findById(id);
-        }catch (Exception e){
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public Optional<UserDAO> findByUser(String username) {
+        try {
+            return repository.findByUsername(username);
+        } catch (Exception e) {
             throw e;
         }
     }
 
     @Override
     public List<UserDAO> readAll() {
-        try{
+        try {
             List<UserDAO> userDAOS = repository.findAll();
             Comparator<UserDAO> daoComparator = ((o1, o2) -> o1.getId().compareTo(o2.getId()));
             Collections.sort(userDAOS, daoComparator);
             return userDAOS;
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
     }
 
     @Override
     public Optional<UserDAO> update(UserDTO userDTO) {
-        try{
+        try {
             UserDAO userDAO = new UserDAO();
             userDAO.setId(userDTO.getId());
             userDAO.setName(userDTO.getName());
@@ -59,17 +67,18 @@ public class CrudServiceUser implements CrudService {
             userDAO.setPass(userDTO.getPass());
             UserDAO response = repository.save(userDAO);
             return Optional.of(response);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
     }
 
     @Override
     public void delete(Long id) {
-        try{
+        try {
             repository.deleteById(id);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw e;
         }
     }
+
 }

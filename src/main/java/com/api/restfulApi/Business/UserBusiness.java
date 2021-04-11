@@ -1,8 +1,9 @@
 package com.api.restfulApi.Business;
 
 import com.api.restfulApi.Models.DAOs.UserDAO;
+import com.api.restfulApi.Models.DTOS.Message;
 import com.api.restfulApi.Models.DTOS.UserDTO;
-import com.api.restfulApi.Services.CrudService;
+import com.api.restfulApi.Services.CrudServiceUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,9 @@ import java.util.Optional;
 public class UserBusiness {
 
     @Autowired
-    private CrudService userService;
+    private CrudServiceUser userService;
+    @Autowired
+    private Message message;
 
     public ResponseEntity<?> createUser(UserDTO userDTO) {
         try {
@@ -40,7 +43,6 @@ public class UserBusiness {
         }
     }
 
-
     public ResponseEntity<?> updateUser(UserDTO userDTO) {
         try {
             Optional<UserDAO> userDAO = userService.read(userDTO.getId());
@@ -48,7 +50,7 @@ public class UserBusiness {
                 userDTO.setName((userDTO.getName() != "") ? userDTO.getName() : userDAO.get().getName());
                 userDTO.setUser((userDTO.getUser() != "") ? userDTO.getUser() : userDAO.get().getUsername());
                 userDTO.setPass((userDTO.getPass() != "") ? UserDAO
-                        .EncriptyPassword(userDAO.get().getName(),
+                        .encriptyPassword(userDAO.get().getName(),
                                 userDAO.get().getUsername(),
                                 userDAO.get().getPass()) : userDAO.get().getPass());
                 userService.update(userDTO);
@@ -67,6 +69,25 @@ public class UserBusiness {
             return new ResponseEntity<>(id, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public ResponseEntity<?> validateLogin(UserDTO userDTO) {
+        try {
+            Optional<UserDAO> user = userService.findByUser(userDTO.getUser());
+            if (user.isEmpty()) {
+                message.setMessage("Usuário não encontrado.");
+                return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+            }
+            String pass = UserDAO.encriptyPassword(user.get().getName(), user.get().getUsername(), userDTO.getPass());
+            if (user.get().getPass().equals(pass)) {
+                return new ResponseEntity<>(UserDAO.convertToDto(user.get()), HttpStatus.OK);
+            } else {
+                message.setMessage("Senha incorreta.");
+                return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
