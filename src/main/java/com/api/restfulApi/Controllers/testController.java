@@ -1,6 +1,6 @@
 package com.api.restfulApi.Controllers;
 
-import com.api.restfulApi.Models.DTOS.TestMessage;
+import com.api.restfulApi.Models.DTOS.Message;
 import com.api.restfulApi.Repository.NativeQueryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,8 +18,8 @@ public class testController {
     private NativeQueryRepository nativeQueryRepository;
 
     @GetMapping("/hello")
-    public ResponseEntity<TestMessage> exampleMessage() {
-        return new ResponseEntity<>(new TestMessage("200", "Hello World!"), HttpStatus.OK);
+    public ResponseEntity<Message> exampleMessage() {
+        return new ResponseEntity<>(new Message("Hello World!"), HttpStatus.OK);
     }
 
     @GetMapping("/query/{id}")

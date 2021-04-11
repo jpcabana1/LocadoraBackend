@@ -1,5 +1,10 @@
 package com.api.restfulApi.Models.DAOs;
 
+import com.api.restfulApi.Models.DTOS.UserDTO;
+import lombok.Getter;
+import lombok.Setter;
+
+
 import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -11,6 +16,8 @@ import javax.persistence.Column;
 @Entity
 @Table(name = "tb_user", schema = "locadora")
 @NoArgsConstructor
+@Getter
+@Setter
 public class UserDAO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,45 +36,34 @@ public class UserDAO {
         this.id = id;
         this.name = name;
         this.username = username;
-        this.pass = EncriptyPassword(name, username, pass);
+        this.pass = encriptyPassword(name, username, pass);
     }
 
-    public Long getId() {
-        return id;
-    }
+    public static String encriptyPassword(String name, String username, String pass){
+        Integer nameCharacterSum = 0;
+        Integer nameUsernameSum = 0;
+        Integer namePassSum = 0;
 
-    public String getName() {
-        return name;
-    }
+        for(int i=0; i<name.length(); i++)
+            nameCharacterSum = nameCharacterSum + name.charAt(i);
 
-    public String getUsername() {
-        return username;
-    }
+        for(int i=0; i<username.length(); i++)
+            nameUsernameSum = nameUsernameSum + username.charAt(i);
 
-    public String getPass() {
-        return pass;
-    }
+        for(int i=0; i<pass.length(); i++)
+            namePassSum = namePassSum + pass.charAt(i);
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPass(String pass) {
-       this.pass = pass;
-    }
-
-    public static String EncriptyPassword(String name, String username,String pass){
-        Long hash = Math.abs((name.hashCode() * username.hashCode()) + (pass.charAt(0) + 1l));
+        Long hash = Math.abs((nameCharacterSum * nameUsernameSum * namePassSum)) + (pass.charAt(0) + 1l);
         return hash.toString();
     }
 
+    public static UserDTO convertToDto(UserDAO userDAO){
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(userDAO.id);
+        userDTO.setName(userDAO.name);
+        userDTO.setUser(userDAO.username);
+        userDTO.setPass(userDAO.pass);
+        return userDTO;
+    }
 
 }
