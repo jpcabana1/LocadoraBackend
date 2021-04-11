@@ -1,7 +1,16 @@
 package com.api.restfulApi.Models.DTOS;
 
+import com.api.restfulApi.Models.DAOs.UserDAO;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class UserDTO {
     @JsonProperty("id")
     private Long id;
@@ -12,38 +21,13 @@ public class UserDTO {
     @JsonProperty("pass")
     private String pass;
 
-    public UserDTO() {
+    public static UserDAO convertToDao(UserDTO userDTO){
+        UserDAO userDAO = new UserDAO();
+        userDAO.setId(userDAO.getId());
+        userDAO.setName(userDAO.getName());
+        userDAO.setUsername(userDAO.getUsername());
+        userDAO.setPass(userDAO.getPass());
+        return userDAO;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
 }
